@@ -24,7 +24,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   <body
     className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
   >
-    {/* Fixed gradient background */}
     <div className="fixed inset-0 z-0 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900" />
     <div className="relative z-10 min-h-screen">
       {children}

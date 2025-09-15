@@ -13,45 +13,107 @@ interface CardProps {
   targetCurrency: string;
 }
 
-const CurrencyResultCard: React.FC<CardProps> = ({ provider, isBest, sourceCurrency, targetCurrency }) => (
-  <Card 
-  className={`relative p-2 ${
-    isBest
-      ? "border-3 border-green-400 bg-green-200"
-      : "bg-gray-100"
-  }`}>
-    {isBest && <Chip icon={<Star />} label="BEST DEAL" color="success" className="absolute top-4 right-4" />}
+const CurrencyResultCard: React.FC<CardProps> = ({
+  provider,
+  isBest,
+  sourceCurrency,
+  targetCurrency,
+}) => (
+  <Card
+    className="relative rounded-2xl shadow-xl overflow-hidden"
+    sx={{
+      background: isBest
+        ? "linear-gradient(135deg, rgba(34,197,94,0.15), rgba(34,197,94,0.05))"
+        : "rgba(30,41,59,0.9)", 
+      border: isBest
+        ? "1px solid rgba(34,197,94,0.6)"
+        : "1px solid rgba(148,163,184,0.2)",
+      transition: "all 0.25s ease-in-out",
+      "&:hover": {
+        transform: "translateY(-4px)",
+        boxShadow: "0 10px 25px rgba(0,0,0,0.4)",
+      },
+    }}
+  >
+    {isBest && (
+      <Chip
+        icon={<Star />}
+        label="BEST DEAL"
+        className="absolute top-4 right-4"
+        sx={{
+          bgcolor: "#22c55e",
+          color: "#fff",
+          fontWeight: 600,
+          boxShadow: "0 4px 12px rgba(34,197,94,0.4)",
+        }}
+      />
+    )}
+
     <CardContent>
-      <Typography 
-      variant="h5"
-      sx={{ fontWeight: "bold" }} 
-      className="font-extrabold  mb-4 pb-2"
+      {/* Provider name */}
+      <Typography
+        variant="h6"
+        sx={{ fontWeight: 700, mb: 3, color: "#f1f5f9" }}
       >
         {provider.name}
       </Typography>
 
-      <div className="border-2 border-gray-500 rounded-lg p-4 mb-4">
-        <Typography variant="body2" className="text-gray-700">Recipient gets</Typography>
-        <Typography variant="h4" className="font-bold text-blue-400">
+      {/* Recipient gets */}
+      <div
+        className="rounded-xl p-4 mb-5"
+        style={{
+          backgroundColor: "rgba(51,65,85,0.7)",
+          border: "1px solid rgba(148,163,184,0.2)",
+        }}
+      >
+        <Typography
+          variant="body2"
+          sx={{ color: "#cbd5e1", marginBottom: "4px" }}
+        >
+          Recipient gets
+        </Typography>
+        <Typography
+          variant="h5"
+          sx={{ fontWeight: 700, color: "#38bdf8" }} 
+        >
           {targetCurrency} {provider.receivedAmount.toFixed(2)}
         </Typography>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 mb-4">
+      {/* Fees & Rate */}
+      <div className="grid grid-cols-2 gap-6 mb-5">
         <div>
-          <Typography variant="body2" className="font-medium">Total Fees</Typography>
-          <Typography variant="h6" className="font-semibold">{sourceCurrency} {provider.totalFees.toFixed(2)}</Typography>
+          <Typography variant="body2" sx={{ color: "#94a3b8" }}>
+            Total Fees
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 600, color: "#f1f5f9" }}
+          >
+            {sourceCurrency} {provider.totalFees.toFixed(2)}
+          </Typography>
         </div>
         <div>
-          <Typography variant="body2" className="font-medium">Exchange Rate</Typography>
-          <Typography variant="h6" className="font-semibold">{provider.exchangeRate.toFixed(4)}</Typography>
+          <Typography variant="body2" sx={{ color: "#94a3b8" }}>
+            Exchange Rate
+          </Typography>
+          <Typography
+            variant="subtitle1"
+            sx={{ fontWeight: 600, color: "#f1f5f9" }}
+          >
+            {provider.exchangeRate.toFixed(4)}
+          </Typography>
         </div>
       </div>
 
-      <div className="flex items-center gap-1 text-gray-500">
-        <AccessTimeIcon fontSize="inherit" />
-        <Typography variant="overline">
-          Arrives in: <span className="font-medium">{provider.estimatedArrivalTime}</span>
+      {/* Arrival time */}
+      <div className="flex items-center gap-2 text-slate-400">
+        <AccessTimeIcon sx={{ fontSize: 18 }} />
+        <Typography variant="body2">
+          Arrives in:{" "}
+          <span className="text-slate-200 font-medium">
+            {provider.estimatedArrivalTime}
+          </span>
         </Typography>
       </div>
     </CardContent>

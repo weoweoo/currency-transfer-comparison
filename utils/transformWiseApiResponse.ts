@@ -4,8 +4,6 @@ export interface TransformedProvider {
   exchangeRate: number;
   receivedAmount: number;
   estimatedArrivalTime: string;
-  rating: number;
-  logo: string;
 }
 
 // Format delivery duration safely
@@ -41,11 +39,6 @@ const formatDeliveryTime = (duration: any): string => {
   return "Unknown";
 };
 
-// Get a provider logo URL if available
-const getProviderLogo = (provider: any): string => {
-  if (provider.logos && provider.logos.length > 0) return provider.logos[0];
-  return "/default-logo.png"; // fallback
-};
 
 export const transformWiseApiResponse = (apiData: any): TransformedProvider[] => {
   if (!apiData || !Array.isArray(apiData.providers)) return [];
@@ -72,8 +65,6 @@ export const transformWiseApiResponse = (apiData: any): TransformedProvider[] =>
       exchangeRate: bestQuote.rate ?? bestQuote.rated ?? 0,
       receivedAmount: bestQuote.receivedAmount ?? 0,
       estimatedArrivalTime,
-      rating: bestQuote.rating ?? 4.0,
-      logo: getProviderLogo(provider),
     });
   });
 

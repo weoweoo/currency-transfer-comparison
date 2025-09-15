@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { TextField, MenuItem, Button, Fab } from "@mui/material";
 import { Search, SwapHoriz } from "@mui/icons-material";
 import currencies from "@/utils/currencies";
@@ -33,24 +33,47 @@ const CurrencyForm: React.FC<FormProps> = ({
   };
 
   return (
-    <div className="bg-violet-100 rounded-3xl shadow-lg p-6 md:p-8 mb-8">
+    <div className="bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900 rounded-3xl shadow-2xl p-6 md:p-8 mb-8 border border-slate-600/20">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-5 items-end">
         {/* Amount */}
         <div className="col-span-1 md:col-span-2">
           <TextField
             fullWidth
             label="Amount"
-            type="text"
+            type="number"
             value={sourceAmount}
-            onChange={(e) => setSourceAmount(e.target.value)}
-            InputLabelProps={{ sx: { fontSize: "1.3rem", color: "slate-700",  } }}
+            onChange={(e) => {
+              const value = e.target.value;
+              // Allow empty string, numbers, and decimal point
+              if (value === '' || /^\d*\.?\d*$/.test(value)) {
+                setSourceAmount(value);
+              }
+            }}
+            inputProps={{
+              step: "any",
+              min: "0",
+              inputMode: "decimal"
+            }}
+            InputLabelProps={{ 
+              sx: { 
+                fontSize: "1.3rem", 
+                color: "#e2e8f0",
+                "&.Mui-focused": { color: "#6366f1" }
+              } 
+            }}
             sx={{
-              "& .MuiInputBase-input": { fontSize: "1.25rem", padding: "14px" },
               "& .MuiOutlinedInput-root": {
-                borderRadius: "16px",
-                backgroundColor: "#f5f5f5",
-                "&:hover": { backgroundColor: "#eaeaea" },
-                "&.Mui-focused": { backgroundColor: "#fff" },
+                backgroundColor: "rgba(30, 41, 59, 0.8)",
+                color: "#f1f5f9",
+                "& fieldset": {
+                  borderColor: "rgba(148, 163, 184, 0.3)",
+                },
+                "&:hover fieldset": {
+                  borderColor: "rgba(148, 163, 184, 0.5)",
+                },
+                "&.Mui-focused fieldset": {
+                  borderColor: "#6366f1",
+                },
               },
             }}
           />
@@ -60,15 +83,28 @@ const CurrencyForm: React.FC<FormProps> = ({
         <TextField
           select
           label="From"
-          value={sourceCurrency}
+          value={sourceCurrency || ""}
           onChange={(e) => setSourceCurrency(e.target.value)}
-          InputLabelProps={{ sx: { fontSize: "1.3rem", color: "slate-700", } }}
+          InputLabelProps={{ 
+            sx: { 
+              fontSize: "1.3rem", 
+              color: "#e2e8f0",
+              "&.Mui-focused": { color: "#6366f1" }
+            } 
+          }}
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: "16px",
-              backgroundColor: "#f5f5f5",
-              "&:hover": { backgroundColor: "#eaeaea" },
-              "&.Mui-focused": { backgroundColor: "#fff" },
+              backgroundColor: "rgba(30, 41, 59, 0.8)",
+              color: "#f1f5f9",
+              "& fieldset": {
+                borderColor: "rgba(148, 163, 184, 0.3)",
+              },
+              "&:hover fieldset": {
+                borderColor: "rgba(148, 163, 184, 0.5)",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#6366f1",
+              },
             },
           }}
         >
@@ -85,10 +121,15 @@ const CurrencyForm: React.FC<FormProps> = ({
             size="medium"
             onClick={swapCurrencies}
             sx={{
-              bgcolor: "#f0f0f0",
-              color: "#555",
-              "&:hover": { bgcolor: "#e0e0e0", transform: "scale(1.05)" },
-              transition: "all 0.2s ease-in-out",
+              bgcolor: "rgba(59, 130, 246, 0.9)",
+              color: "#fff",
+              "&:hover": { 
+                bgcolor: "rgba(37, 99, 235, 1)", 
+                transform: "scale(1.05)",
+                boxShadow: "0 10px 25px rgba(59, 130, 246, 0.3)"
+              },
+              transition: "all 0.3s ease-in-out",
+              boxShadow: "0 4px 15px rgba(59, 130, 246, 0.2)",
             }}
           >
             <SwapHoriz />
@@ -99,15 +140,28 @@ const CurrencyForm: React.FC<FormProps> = ({
         <TextField
           select
           label="To"
-          value={targetCurrency}
+          value={targetCurrency || ""}
           onChange={(e) => setTargetCurrency(e.target.value)}
-          InputLabelProps={{ sx: { fontSize: "1.3rem", color: "slate-700", } }}
+          InputLabelProps={{ 
+            sx: { 
+              fontSize: "1.3rem", 
+              color: "#e2e8f0",
+              "&.Mui-focused": { color: "#6366f1" }
+            } 
+          }}
           sx={{
             "& .MuiOutlinedInput-root": {
-              borderRadius: "16px",
-              backgroundColor: "#f5f5f5",
-              "&:hover": { backgroundColor: "#eaeaea" },
-              "&.Mui-focused": { backgroundColor: "#fff" },
+              backgroundColor: "rgba(30, 41, 59, 0.8)",
+              color: "#f1f5f9",
+              "& fieldset": {
+                borderColor: "rgba(148, 163, 184, 0.3)",
+              },
+              "&:hover fieldset": {
+                borderColor: "rgba(148, 163, 184, 0.5)",
+              },
+              "&.Mui-focused fieldset": {
+                borderColor: "#6366f1",
+              },
             },
           }}
         >
@@ -129,13 +183,21 @@ const CurrencyForm: React.FC<FormProps> = ({
             height: 56,
             fontSize: "1.15rem",
             borderRadius: "16px",
-            background: "linear-gradient(135deg, #6b5bff, #c084fc)",
+            background: "linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899)",
             color: "#fff",
             fontWeight: 600,
             textTransform: "none",
+            boxShadow: "0 4px 15px rgba(59, 130, 246, 0.3)",
             "&:hover": {
-              background: "linear-gradient(135deg, #5a4bff, #b373f8)",
+              background: "linear-gradient(135deg, #2563eb, #7c3aed, #db2777)",
+              boxShadow: "0 8px 25px rgba(59, 130, 246, 0.4)",
+              transform: "translateY(-1px)",
             },
+            "&:disabled": {
+              background: "rgba(148, 163, 184, 0.5)",
+              color: "rgba(248, 250, 252, 0.5)",
+            },
+            transition: "all 0.3s ease-in-out",
           }}
         >
           {isLoading ? "Comparing..." : "Compare"}

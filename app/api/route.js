@@ -22,7 +22,7 @@ export async function GET(request) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data); // Must use NextResponse in App Router
+    return NextResponse.json(data); 
   } catch (error) {
     console.error("Wise API Error:", error);
     return NextResponse.json({ error: "Failed to fetch comparison data" }, { status: 500 });

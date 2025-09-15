@@ -20,6 +20,9 @@
 # production
 /build
 
+# App page
+app/page
+
 # misc
 .DS_Store
 *.pem

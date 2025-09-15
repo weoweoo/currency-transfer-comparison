@@ -16,7 +16,6 @@ const CurrencyComparison = () => {
   const [error, setError] = useState("");
   const [hasSearched, setHasSearched] = useState(false);
 
-  // Reset results whenever user changes the inputs after a search
   useEffect(() => {
     if (hasSearched) {
       setResults([]);
@@ -26,7 +25,6 @@ const CurrencyComparison = () => {
   }, [sourceAmount, sourceCurrency, targetCurrency]);
 
   const fetchComparison = async () => {
-    // 1️⃣ Validate input first
     if (!/^\d*\.?\d+$/.test(sourceAmount)) {
       setError("Input valid amount");
       setResults([]);
@@ -89,7 +87,7 @@ const CurrencyComparison = () => {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-600 text-white p-3 rounded-md my-4 text-center">
+          <div className="bg-red-800 text-white p-3 rounded-md my-4 text-center">
             {error}
           </div>
         )}
